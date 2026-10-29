@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend:/usr/share/nginx/html/frontend
+    depends_on:
+      - php
+      - node
+      - python
+
+  php:
+    build: ./php-app
+    ports:
+      - "8001:80"
+
+  node:
+    build: ./node-app
+    ports:
+      - "8002:3000"
+
+  python:
+    build: ./python-app
+    ports:
+      - "8003:8000"
